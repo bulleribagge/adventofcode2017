@@ -13,21 +13,23 @@ fs.readFile(livePath, 'utf8', function (error, data) {
         var row = rows[j];
 
         var elements = row.split(/\s+/);
-        for(var i = 0; i < elements.length; i++)
+        var found = false;
+        for(var i = 0; i < elements.length && !found; i++)
         {
-            if(parseInt(elements[i]) > max)
+            for(var k = 0; k < elements.length && !found; k++)
             {
-                max = elements[i];
-            }
-            
-            if(parseInt(elements[i]) < min)
-            {
-                min = elements[i];
+                if(k !== i)
+                {
+                    if(elements[k] % elements[i] == 0)
+                    {
+                        checksum += elements[k] / elements[i];
+                        console.log(`elements[k]: ${elements[k]}, elements[i]: ${elements[i]}, i: ${i}, k: ${k}`);
+                        found = true;
+                    }
+                }
             }
         }
 
-        checksum += max - min;
-
-        console.log(`row: ${row} min: ${min} max: ${max} delta: ${max - min} checksum: ${checksum}`);
+        console.log(`row: ${row} checksum: ${checksum}`);
     }
 });
