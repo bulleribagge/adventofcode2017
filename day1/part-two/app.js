@@ -2,15 +2,27 @@ var fs = require('fs');
 
 var fdata = "";
 
-fs.readFile('input.txt', 'utf8', function (error, data) {
+var testPath = 'testinput.txt';
+var livePath = __dirname + '/../input.txt'
+
+fs.readFile(livePath, 'utf8', function (error, data) {
     var lines = data.split('\r\n');
     for(var j = 0; j < lines.length; j++)
     {
         var line = lines[j];
         var sum = 0;
+        var halfLength = line.length / 2;
         for(var i = 0; i < line.length; i++)
         {
-            var nextIndex = i == line.length - 1 ? 0 : i + 1;
+            var nextIndex;
+            if((i + halfLength) >= line.length)
+            {
+                nextIndex = (i + halfLength) % line.length
+            }else{
+                nextIndex = i + halfLength;
+            }
+
+            //console.log("nextIndex: " + nextIndex + " nextIndex value: " + line[nextIndex]);
             if(line[i] == line[nextIndex])
             {
                 sum += parseInt(line[i]);
@@ -19,6 +31,4 @@ fs.readFile('input.txt', 'utf8', function (error, data) {
 
         console.log("line: " + line + " sum: " + sum);
     }
-
-    
 });

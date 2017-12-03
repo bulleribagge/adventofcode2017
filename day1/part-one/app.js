@@ -2,7 +2,10 @@ var fs = require('fs');
 
 var fdata = "";
 
-fs.readFile('input.txt', 'utf8', function (error, data) {
+var testPath = 'testinput.txt';
+var livePath = __dirname + '/../input.txt'
+
+fs.readFile(livePath, 'utf8', function (error, data) {
     var lines = data.split('\r\n');
     for(var j = 0; j < lines.length; j++)
     {
